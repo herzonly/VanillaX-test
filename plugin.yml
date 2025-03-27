@@ -1,0 +1,21 @@
+name: VanillaX
+version: 1.0.0
+api: 5.0.0
+main: Herza\VanillaX\VanillaX
+author: Herza
+description: Plugin komprehensif untuk mendaftarkan seluruh konten vanilla Minecraft Bedrock
+website: https://github.com/Herza
+depend: []
+softdepend: []
+extensions:
+  - zlib
+  - json
+  - yaml
+
+permissions:
+  vanillax.admin:
+    description: Izin administrator untuk VanillaX
+    default: op
+  vanillax.use:
+    description: Izin menggunakan fitur VanillaX
+    default: true
