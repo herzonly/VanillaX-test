@@ -6,8 +6,6 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
 use pocketmine\item\StringToItemParser;
-use pocketmine\block\BlockFactory;
-use pocketmine\block\Block;
 use pocketmine\entity\EntityFactory;
 use pocketmine\entity\Entity;
 use pocketmine\event\Listener;
@@ -15,6 +13,7 @@ use pocketmine\math\Vector3;
 use pocketmine\world\World;
 use pocketmine\player\Player;
 use pocketmine\event\player\PlayerInteractEvent;
+use pocketmine\entity\Vehicle as PocketmineVehicle;
 
 class VanillaX extends PluginBase implements Listener {
     public function onEnable(): void {
@@ -73,9 +72,9 @@ class VanillaX extends PluginBase implements Listener {
         
         EntityFactory::getInstance()->register(
             $entityId, 
-            BoatEntity::class, 
-            function(World $world, Vector3 $position, float $yaw, float $pitch) use ($type): BoatEntity {
-                return new BoatEntity($world, $position, $type);
+            VanillaBoat::class, 
+            function(World $world, Vector3 $position, float $yaw, float $pitch) use ($type): VanillaBoat {
+                return new VanillaBoat($world, $position, $type);
             }
         );
     }
@@ -89,9 +88,9 @@ class VanillaX extends PluginBase implements Listener {
         
         EntityFactory::getInstance()->register(
             $entityId, 
-            MinecartEntity::class, 
-            function(World $world, Vector3 $position, float $yaw, float $pitch) use ($type): MinecartEntity {
-                return new MinecartEntity($world, $position, $type);
+            VanillaMinecart::class, 
+            function(World $world, Vector3 $position, float $yaw, float $pitch) use ($type): VanillaMinecart {
+                return new VanillaMinecart($world, $position, $type);
             }
         );
     }
@@ -172,10 +171,28 @@ class VanillaX extends PluginBase implements Listener {
     }
 }
 
-class BoatEntity extends \pocketmine\entity\Vehicle {
+class VanillaBoat extends PocketmineVehicle {
     private string $woodType;
+
+    public function __construct(World $world, Vector3 $position, string $woodType) {
+        parent::__construct($world, $position);
+        $this->woodType = $woodType;
+    }
+
+    public function getWoodType(): string {
+        return $this->woodType;
+    }
 }
 
-class MinecartEntity extends \pocketmine\entity\Vehicle {
+class VanillaMinecart extends PocketmineVehicle {
     private string $type;
+
+    public function __construct(World $world, Vector3 $position, string $type) {
+        parent::__construct($world, $position);
+        $this->type = $type;
+    }
+
+    public function getType(): string {
+        return $this->type;
+    }
 }
